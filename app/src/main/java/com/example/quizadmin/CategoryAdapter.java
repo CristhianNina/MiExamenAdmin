@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,6 +62,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         private TextView catName;
         private ImageView deleteB;
         private Dialog loadingDialog;
+        private Dialog editDialog;
+        private EditText tv_editCatName;
+        private Button updateCatB;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,13 +78,49 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             loadingDialog.getWindow().setBackgroundDrawableResource(R.drawable.progress_background);
             loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
 
+            editDialog = new Dialog(itemView.getContext());
+            editDialog.setContentView(R.layout.edit_category_dialog);
+            editDialog.setCancelable(true);
+            loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            tv_editCatName = editDialog.findViewById(R.id.ec_cat_name);
+            updateCatB = editDialog.findViewById(R.id.ec_add_btn);
+
         }
 
 
-        private void setData(String title, final int pos, CategoryAdapter adapter)
+        private void setData(String title, final int pos, final CategoryAdapter adapter)
         {
 
             catName.setText(title);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    tv_editCatName.setText(cat_list.get(pos).getName());
+                    editDialog.show();
+
+                    return false;
+                }
+            });
+
+
+            updateCatB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(tv_editCatName.getText().toString().isEmpty())
+                    {
+                        tv_editCatName.setError("Enter Category Name");
+                        return;
+                    }
+
+                    updateCategory(tv_editCatName.getText().toString(), pos, itemView.getContext(), adapter );
+
+                }
+            });
+
 
             deleteB.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,7 +129,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     AlertDialog dialog = new AlertDialog.Builder(itemView.getContext())
                             .setTitle("Eliminar Categoría")
                             .setMessage("¿Estas seguro de eliminar la categoría?")
-                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
@@ -95,7 +137,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
                                 }
                             })
-                            .setNegativeButton("Cancel",null)
+                            .setNegativeButton("Cancelar",null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
 
@@ -158,6 +200,61 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                         }
                     });
 
+        }
+
+        private void updateCategory(final String catNewName, final int pos, Context context, CategoryAdapter adapter ){
+
+            editDialog.dismiss();
+
+            loadingDialog.show();
+
+            Map<String,Object> catData = new ArrayMap<>();
+            catData.put("NAME",catNewName);
+
+
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+            firestore.collection("QUIZ").document(cat_list.get(pos).getId())
+                    .update(catData)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                            Map<String,Object> catDoc = new ArrayMap<>();
+                            catDoc.put("CAT" + String.valueOf(pos + 1) + "_NAME",catNewName);
+
+                            firestore.collection("QUIZ").document("Categories")
+                                    .update(catDoc)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                            Toast.makeText(context,"Nombre cambiado correctamente",Toast.LENGTH_SHORT).show();
+                                            CategoryActivity.catList.get(pos).setName(catNewName);
+                                            adapter.notifyDataSetChanged();
+
+                                            loadingDialog.dismiss();
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
+                                            loadingDialog.dismiss();
+                                        }
+                                    });
+
+                        }
+
+                    })
+                     .addOnFailureListener(new OnFailureListener() {
+                     @Override
+                       public void onFailure(@NonNull Exception e) {
+                         Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
+                         loadingDialog.dismiss();
+                       }
+            });
         }
 
     }
