@@ -37,14 +37,18 @@ public class SetsActivity extends AppCompatActivity {
 
     public static List<String> setsIDs = new ArrayList<>();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sets);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.sa_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Sets");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setsView = findViewById(R.id.sets_recycler);
         addSetB = findViewById(R.id.addSetB);
@@ -57,13 +61,11 @@ public class SetsActivity extends AppCompatActivity {
 
         addSetB.setText("ADD NEW SET");
 
-
         addSetB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 addNewSet();
-
             }
         });
 
@@ -77,9 +79,10 @@ public class SetsActivity extends AppCompatActivity {
 
     }
 
+
+
     private void loadSets()
     {
-
         setsIDs.clear();
 
         loadingDialog.show();
@@ -89,9 +92,10 @@ public class SetsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                Long noOfSets = (Long) documentSnapshot.get("SETS");
+                long noOfSets = (long)documentSnapshot.get("SETS");
 
-                for (int i = 1; i <= noOfSets; i++) {
+                for(int i=1; i <= noOfSets; i++)
+                {
                     setsIDs.add(documentSnapshot.getString("SET" + String.valueOf(i) + "_ID"));
                 }
 
@@ -104,24 +108,25 @@ public class SetsActivity extends AppCompatActivity {
                 loadingDialog.dismiss();
 
             }
-            })  .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(SetsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                    loadingDialog.dismiss();
-                }
-            });
-
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SetsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismiss();
+                    }
+                });
 
     }
 
+
+
     private void addNewSet()
     {
-
         loadingDialog.show();
 
-        String curr_cat_id = catList.get(selected_cat_index).getId();
-        String curr_counter = catList.get(selected_cat_index).getSetCounter();
+        final String curr_cat_id = catList.get(selected_cat_index).getId();
+        final String curr_counter = catList.get(selected_cat_index).getSetCounter();
 
         Map<String,Object> qData = new ArrayMap<>();
         qData.put("COUNT","0");
@@ -144,7 +149,7 @@ public class SetsActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        Toast.makeText(SetsActivity.this, " Set añadido satisfactoriamente",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SetsActivity.this, " Set Added Successfully",Toast.LENGTH_SHORT).show();
 
                                         setsIDs.add(curr_counter);
                                         catList.get(selected_cat_index).setNoOfSets(String.valueOf(setsIDs.size()));
@@ -164,18 +169,17 @@ public class SetsActivity extends AppCompatActivity {
                                 });
 
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-
-
-            }
-        });
-
-
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SetsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismiss();
+                    }
+                });
 
     }
+
 
 
 }

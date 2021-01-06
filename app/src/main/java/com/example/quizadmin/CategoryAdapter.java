@@ -145,7 +145,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     deleteCategory(pos, itemView.getContext(), adapter);
-
                                 }
                             })
                             .setNegativeButton("Cancelar",null)
