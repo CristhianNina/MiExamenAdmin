@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(email.getText().toString().isEmpty()) {
-                    email.setError("Enter Email ID");
+                    email.setError("Ingrese su Correo");
                     return;
                 }
                 else
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if(pass.getText().toString().isEmpty()) {
-                    pass.setError("Enter Password");
+                    pass.setError("Ingrese su contraseña");
                     return;
                 }
                 else
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this,"Sucess",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"Accediendo",Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
                             startActivity(intent);

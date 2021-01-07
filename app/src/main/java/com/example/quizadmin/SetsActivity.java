@@ -36,6 +36,7 @@ public class SetsActivity extends AppCompatActivity {
     private Dialog loadingDialog;
 
     public static List<String> setsIDs = new ArrayList<>();
+    public static int selected_set_index=0;
 
 
 
@@ -78,7 +79,6 @@ public class SetsActivity extends AppCompatActivity {
         loadSets();
 
     }
-
 
 
     private void loadSets()
@@ -149,7 +149,7 @@ public class SetsActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        Toast.makeText(SetsActivity.this, " Set Added Successfully",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SetsActivity.this, " Nuevo set Añadido",Toast.LENGTH_SHORT).show();
 
                                         setsIDs.add(curr_counter);
                                         catList.get(selected_cat_index).setNoOfSets(String.valueOf(setsIDs.size()));
