@@ -49,18 +49,5 @@
         app:layout_constraintStart_toStartOf="parent"
         android:textAllCaps="false"  />
 
-    <Button
-        android:id="@+id/addCatB"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:padding="16dp"
-        android:text="Añadir Categoría"
-        android:textColor="@color/colorAccent"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textAllCaps="false"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

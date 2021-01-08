@@ -65,6 +65,10 @@ public class QuestionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(QuestionsActivity.this, QuestionDetailsActivity.class);
+                intent.putExtra("ACTION","ADD");
+                startActivity(intent);
+
             }
         });
 
@@ -134,6 +138,15 @@ public class QuestionsActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
 
