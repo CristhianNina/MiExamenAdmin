@@ -19,7 +19,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
 
+import static com.example.quizadmin.CategoryActivity.catList;
+import static com.example.quizadmin.CategoryActivity.selected_cat_index;
 import static com.example.quizadmin.QuestionsActivity.quesList;
+import static com.example.quizadmin.SetsActivity.selected_set_index;
+import static com.example.quizadmin.SetsActivity.setsIDs;
 
 public class QuestionDetailsActivity extends AppCompatActivity {
 
@@ -28,6 +32,8 @@ public class QuestionDetailsActivity extends AppCompatActivity {
     private String qStr, aStr, bStr, cStr, dStr, ansStr;
     private Dialog loadingDialog;
     private FirebaseFirestore firestore;
+    private String action;
+    private int qID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +42,7 @@ public class QuestionDetailsActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.qdetails_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Questions " + String.valueOf(quesList.size() + 1));
+
 
         ques = findViewById(R.id.question);
         optionA = findViewById(R.id.optionA);
@@ -53,6 +59,21 @@ public class QuestionDetailsActivity extends AppCompatActivity {
         loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
 
         firestore = FirebaseFirestore.getInstance();
+
+        action = getIntent().getStringExtra("ACTION");
+
+        if(action.compareTo("EDIT") == 0)
+        {
+            qID = getIntent().getIntExtra("Q_ID",0);
+            loadData(qID);
+            getSupportActionBar().setTitle("Question " + String.valueOf(qID));
+            addQB.setText("UPDATE");
+        }
+        else
+        {
+            getSupportActionBar().setTitle("Question " + String.valueOf(quesList.size() + 1));
+            addQB.setText("ADD");
+        }
 
         addQB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +115,15 @@ public class QuestionDetailsActivity extends AppCompatActivity {
                 }
 
 
+
+                if(action.compareTo("EDIT") == 0)
+                {
+                    editQuestion();
+                }
+                else {
+                    addNewQuestion();
+                }
+
                 addNewQuestion();
 
             }
@@ -116,11 +146,11 @@ public class QuestionDetailsActivity extends AppCompatActivity {
         quesData.put("D",dStr);
         quesData.put("ANSWER",ansStr);
 
-        String doc_id = firestore.collection("QUIZ").document(CategoryActivity.catList.get(CategoryActivity.selected_cat_index).getId())
-                .collection(SetsActivity.setsIDs.get(SetsActivity.selected_set_index)).document().getId();
+        String doc_id = firestore.collection("QUIZ").document(catList.get(selected_cat_index).getId())
+                .collection(setsIDs.get(selected_set_index)).document().getId();
 
-        firestore.collection("QUIZ").document(CategoryActivity.catList.get(CategoryActivity.selected_cat_index).getId())
-                .collection(SetsActivity.setsIDs.get(SetsActivity.selected_set_index)).document(doc_id)
+        firestore.collection("QUIZ").document(catList.get(selected_cat_index).getId())
+                .collection(setsIDs.get(selected_set_index)).document(doc_id)
                 .set(quesData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -131,8 +161,8 @@ public class QuestionDetailsActivity extends AppCompatActivity {
                         quesDoc.put("COUNT",String.valueOf(quesList.size() + 1));
 
 
-                        firestore.collection("QUIZ").document(CategoryActivity.catList.get(CategoryActivity.selected_cat_index).getId())
-                                .collection(SetsActivity.setsIDs.get(SetsActivity.selected_set_index)).document("QUESTIONS_LIST")
+                        firestore.collection("QUIZ").document(catList.get(selected_cat_index).getId())
+                                .collection(setsIDs.get(selected_set_index)).document("QUESTIONS_LIST")
                                 .update(quesDoc)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -155,7 +185,7 @@ public class QuestionDetailsActivity extends AppCompatActivity {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(QuestionDetailsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-
+                                        loadingDialog.dismiss();
                                     }
                                 });
 
@@ -165,10 +195,67 @@ public class QuestionDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(QuestionDetailsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-
+                        loadingDialog.dismiss();
                     }
                 });
     }
 
+    private void loadData(int id)
+    {
+        ques.setText(quesList.get(id).getQuestion());
+        optionA.setText(quesList.get(id).getOptionA());
+        optionB.setText(quesList.get(id).getOptionB());
+        optionC.setText(quesList.get(id).getOptionC());
+        optionD.setText(quesList.get(id).getOptionD());
+        answer.setText(String.valueOf(quesList.get(id).getCorrectAns()));
+    }
+
+
+    private void editQuestion()
+    {
+
+        loadingDialog.show();
+
+        Map<String,Object> quesData = new ArrayMap<>();
+        quesData.put("QUESTION", qStr);
+        quesData.put("A",aStr);
+        quesData.put("B",bStr);
+        quesData.put("C",cStr);
+        quesData.put("D",dStr);
+        quesData.put("ANSWER",ansStr);
+
+        firestore.collection("QUIZ").document(catList.get(selected_cat_index).getId())
+                .collection(setsIDs.get(selected_set_index)).document(quesList.get(qID).getQuesID())
+                .set(quesData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Toast.makeText(QuestionDetailsActivity.this,"Se actualizaron las preguntas",Toast.LENGTH_SHORT).show();
+
+                        quesList.get(qID).setQuestion(qStr);
+                        quesList.get(qID).setOptionA(aStr);
+                        quesList.get(qID).setOptionB(bStr);
+                        quesList.get(qID).setOptionC(cStr);
+                        quesList.get(qID).setOptionD(dStr);
+                        quesList.get(qID).setCorrectAns(Integer.valueOf(ansStr));
+
+                        loadingDialog.dismiss();
+                        QuestionDetailsActivity.this.finish();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Toast.makeText(QuestionDetailsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismiss();
+
+                    }
+                });
+
+
+    }
 
 }
