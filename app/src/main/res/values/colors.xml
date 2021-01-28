@@ -13,5 +13,9 @@
     <color name="colorPrimaryDark">#9B1515</color>
     <color name="colorAccent">#FFFFFF</color>
 
+    <color name="colorCeleste">#03D4ED</color>
+    <color name="colorLila">#8E24AA</color>
+    <color name="colorVerde">#43A047</color>
+    <color name="colorAzul">#2549FF</color>
 
 </resources>

@@ -25,6 +25,7 @@
         android:layout_height="69dp"
         android:layout_marginTop="50dp"
         android:ems="10"
+
         android:hint="Pregunta 1"
         android:inputType="textPersonName"
         android:textColor="#18FFFF"
@@ -76,17 +77,38 @@
         android:textColorHint="#FFFFFF" />
 
 
-    <Button
-        android:id="@+id/btnCrearDatos"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="277dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:background="@color/teal_200"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
         android:gravity="center"
-        android:text="Crear Preguntas"
-        android:textColor="#FFFFFF" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCrearDatos"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/round_corner"
+            android:gravity="center"
+            android:text="Crear Preguntas"
+            android:textColor="#FFFFFF" />
+
+
+        <Button
+            android:id="@+id/btnVerRespuestas"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="169dp"
+            android:layout_height="71dp"
+            android:layout_gravity="center"
+            android:background="@drawable/round_corner3"
+            android:gravity="center"
+            android:onClick="IraRespuestas"
+            android:text="Ver Respuestas"
+            android:textColor="#FFFFFF" />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

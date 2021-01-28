@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0D6D6"
+    android:background="@drawable/main_background"
     tools:context=".SetsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/sa_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAzul"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,22 +36,9 @@
         android:id="@+id/addSetB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAzul"
         android:padding="16dp"
-        android:text="Agregar Nuevo Set"
-        android:textColor="@color/colorAccent"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/addSetC"
-        android:layout_width="193dp"
-        android:layout_height="56dp"
-        android:background="@color/colorPrimary"
-        android:padding="16dp"
-        android:text="Agregar Set"
+        android:text="@string/AñadirSet"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

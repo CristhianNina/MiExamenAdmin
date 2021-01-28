@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0D6D6"
+    android:background="@drawable/main_background"
     tools:context=".QuestionsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/q_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAzul"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:id="@+id/addQB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAzul"
         android:padding="16dp"
         android:text="Agregar nueva pregunta"
         android:textColor="@color/colorAccent"

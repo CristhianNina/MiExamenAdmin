@@ -197,7 +197,11 @@ public class PreguntasAcivity extends AppCompatActivity {
 
     }
 
+    public void IraRespuestas(View view){
+        Intent respuestas = new Intent(this, Respuestas.class);
+        startActivity(respuestas);
 
+    }
 
 
 

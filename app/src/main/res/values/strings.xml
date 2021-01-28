@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">QuizAdmin</string>
+    <string name="Agregar_Set">Agregar Set</string>
+    <string name="Agregar_Nueva_Pregunta">Agregar Nueva Pregunta</string>
+    <string name="AñadirSet">Añadir Set</string>
 </resources>

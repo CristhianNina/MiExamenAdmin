@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0D6D6"
+    android:background="@drawable/main_background"
     tools:context=".CategoryActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAzul"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:layout_constraintBottom_toTopOf="@+id/cat_recycler"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
         android:id="@+id/addCatB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAzul"
         android:padding="16dp"
         android:text="Añadir Categoría"
         android:textColor="@color/colorAccent"

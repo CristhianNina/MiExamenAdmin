@@ -32,7 +32,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAzul"
         android:text="Cambiar Nombre"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
