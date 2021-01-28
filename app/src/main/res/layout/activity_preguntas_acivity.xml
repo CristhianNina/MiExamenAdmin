@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/main_background"
+    tools:context=".PreguntasAcivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:gravity="center"
+        android:text="Crear Examen"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#62F6E5" />
+
+    <EditText
+        android:id="@+id/editTextP1"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="Pregunta 1"
+        android:inputType="textPersonName"
+        android:textColor="#18FFFF"
+        android:textColorHighlight="#FD2C2C"
+        android:textColorHint="#FFFDFD" />
+
+    <EditText
+        android:id="@+id/editTextP2"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Pregunta 2"
+        android:inputType="textPersonName"
+        android:textColor="#18FFFF"
+        android:textColorHint="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/editTextP3"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Pregunta 3"
+        android:inputType="textPersonName"
+        android:textColor="#18FFFF"
+        android:textColorHint="#FDFDFD" />
+
+    <EditText
+        android:id="@+id/editTextP4"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Pregunta 4"
+        android:inputType="textPersonName"
+        android:textColor="#18FFFF"
+        android:textColorHint="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/editTextP5"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Pregunta 5"
+        android:inputType="textPersonName"
+        android:textColor="#18FFFF"
+        android:textColorHint="#FFFFFF" />
+
+
+    <Button
+        android:id="@+id/btnCrearDatos"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="277dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/teal_200"
+        android:gravity="center"
+        android:text="Crear Preguntas"
+        android:textColor="#FFFFFF" />
+
+
+</LinearLayout>

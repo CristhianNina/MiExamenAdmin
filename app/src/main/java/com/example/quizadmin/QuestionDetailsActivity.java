@@ -7,6 +7,7 @@ import androidx.collection.ArrayMap;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -43,6 +44,7 @@ public class QuestionDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.qdetails_toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ques = findViewById(R.id.question);
         optionA = findViewById(R.id.optionA);
@@ -66,7 +68,7 @@ public class QuestionDetailsActivity extends AppCompatActivity {
         {
             qID = getIntent().getIntExtra("Q_ID",0);
             loadData(qID);
-            getSupportActionBar().setTitle("Question " + String.valueOf(qID));
+            getSupportActionBar().setTitle("Question " + String.valueOf(qID + 1));
             addQB.setText("UPDATE");
         }
         else
@@ -257,5 +259,17 @@ public class QuestionDetailsActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == android.R.id.home)
+        {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }
